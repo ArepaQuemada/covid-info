@@ -1,29 +1,35 @@
 import React from 'react';
+import useFetch from './hooks/useFetch';
+import useParseDate from './hooks/useParseDate';
 import { Line } from 'react-chartjs-2';
+import dateFormat from 'dateformat';
 
-export default function App() {
+function App() {
+   const { today, lastWeek } = useParseDate();
+   const data = useFetch(`https://api.covid19api.com/country/south-africa?from=${lastWeek}&to=${today}`) || [];
+   console.log(data);
 
-   const dataChart = {
-      labels: ['First Label', 'Second Label', 'Third Label', 'Fourth Label'],
+   const dataSet = {
+      labels: data.map(elem => dateFormat(elem.Date, "d, mmm")),
       datasets: [
          {
-            label: 'First data set',
-            data: [1, 5, 6, 99],
-            borderColor: 'blue',
-            backgroundColor: 'rgb(255, 255, 255, 0.1)'
+            label: 'Confirmed Cases',
+            data: data.map(elem => elem.Confirmed),
+            backgroundColor: 'rgb(255,255,255,0.1)',
          },
          {
-            label: 'Second data set',
-            data: [2, 7, 88, 1],
-            borderColor: 'red',
-            backgroundColor: 'rgb(255, 255, 255, 0.1)'
+            label: 'Recovered',
+            data: data.map(elem => elem.Recovered),
+            backgroundColor: 'rgb(255,255,255,0.1)',
          }
       ]
-   };
+   }
 
-   return (
-      <div className="App">
-         <Line data={dataChart}></Line>
-      </div>
-   );
+   console.log(dataSet)
+
+  return (
+    <div className="App">
+       <Line data={dataSet}/>
+    </div>
+  );
 }
