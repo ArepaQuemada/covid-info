@@ -5,6 +5,7 @@ import dateFormat from 'dateformat';
 import { makeStyles, Container, Backdrop, CircularProgress } from '@material-ui/core';
 import MainChart from './components/MainChart';
 import CardContainer from './components/CardsContainer';
+import MainDoughnut from './components/MainDoughnut';
 import buildDataSet from './utils/buildDataSet';
 
 const useStyles = makeStyles(theme => ({
@@ -49,6 +50,7 @@ export default function App({ theme }) {
    const { NewConfirmed, NewDeaths, NewRecovered, TotalConfirmed, TotalDeaths, TotalRecovered } = countryData;
    let dataSetMainChart = {};
    let newDataCountrySlots = [];
+   let dataserMainDoughnut = {};
 
    if (data) {
       const labels = data.map(elem => dateFormat(elem.Date, "d, mmm"));
@@ -76,7 +78,16 @@ export default function App({ theme }) {
    }
 
    if (global) {
-      newDataCountrySlots = parseSlots("New Confirmed", NewConfirmed, "New Deaths", NewDeaths, "New Recovered", NewRecovered, theme);
+      newDataCountrySlots = parseSlots('New Confirmed', NewConfirmed, 'New Deaths', NewDeaths, 'New Recovered', NewRecovered, theme);
+      const labels = ['Total Confirmed', 'Total Deaths', 'Total Recovered'];
+      const datasets = [
+         {
+            label: 'Confirmed',
+            data: [ TotalConfirmed, TotalDeaths, TotalRecovered ],
+            backgroundColor: [theme.palette.primary.main, theme.palette.secondary.main, theme.palette.success.main],
+         },
+      ]
+      dataserMainDoughnut = buildDataSet(labels, datasets);
    }
 
    if (!(data || global)) {
@@ -96,6 +107,9 @@ export default function App({ theme }) {
             theme={theme}
             slots={newDataCountrySlots}
          />
+         <MainDoughnut
+            dataset={dataserMainDoughnut}
+            />
       </Container>
    );
 }
