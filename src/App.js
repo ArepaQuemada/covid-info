@@ -5,34 +5,38 @@ import dateFormat from 'dateformat';
 import { makeStyles, Container, Backdrop, CircularProgress } from '@material-ui/core';
 import MainChart from './components/MainChart';
 import CardContainer from './components/CardsContainer';
+import buildDataSet from './utils/buildDataSet';
 
 const useStyles = makeStyles(theme => ({
    root: {
       [theme.breakpoints.down('md')]: {
          padding: '10px'
       }
-   }, 
+   },
    backdrop: {
       zIndex: theme.zIndex.drawer + 1,
       color: theme.palette.primary.main,
-    },  
+   },
 }));
 
-const parseSlots = (firstTitle, firstStat, secondTitle, secondStat, thirdTitle, thirdStat) => {
-   return {
-      firstSlot: {
-         firstTitle,
-         firstStat
+const parseSlots = (firstTitle, firstStat, secondTitle, secondStat, thirdTitle, thirdStat, theme) => {
+   return [
+      {
+         title: firstTitle,
+         stats: firstStat,
+         backgroundColor: theme.palette.primary.main
       },
-      secondSlot: {
-         secondTitle,
-         secondStat
+      {
+         title: secondTitle,
+         stats: secondStat,
+         backgroundColor: theme.palette.secondary.main
       },
-      thirdSlot: {
-         thirdTitle,
-         thirdStat
+      {
+         title: thirdTitle,
+         stats: thirdStat,
+         backgroundColor: theme.palette.success.main
       }
-   }   
+   ]
 }
 
 export default function App({ theme }) {
@@ -43,34 +47,38 @@ export default function App({ theme }) {
    console.log(global);
    const countryData = ((global || {}).Countries || []).find(elem => elem.Country = 'Argentina') || {};
    const { NewConfirmed, NewDeaths, NewRecovered, TotalConfirmed, TotalDeaths, TotalRecovered } = countryData;
-   let dataSet = {};
+   let dataSetMainChart = {};
+   let newDataCountrySlots = [];
 
    if (data) {
-      dataSet = {
-         labels: data.map(elem => dateFormat(elem.Date, "d, mmm")),
-         datasets: [
-            {
-               label: 'Confirmed',
-               data: data.map(elem => elem.Confirmed),
-               backgroundColor: 'rgb(255,255,255,0.1)',
-               borderColor: theme.palette.alert.main,
-            },
-            {
-               label: 'Recovered',
-               data: data.map(elem => elem.Recovered),
-               backgroundColor: 'rgb(255,255,255,0.1)',
-               borderColor: theme.palette.success.main
-            },
-            {
-               label: 'Deaths',
-               data: data.map(elem => elem.Deaths),
-               backgroundColor: 'rgb(255,255,255,0.1)',
-               borderColor: theme.palette.secondary.main 
-            }
-         ]
-      }
+      const labels = data.map(elem => dateFormat(elem.Date, "d, mmm"));
+      const datasets = [
+         {
+            label: 'Confirmed',
+            data: data.map(elem => elem.Confirmed),
+            backgroundColor: 'rgb(255,255,255,0.1)',
+            borderColor: theme.palette.alert.main,
+         },
+         {
+            label: 'Recovered',
+            data: data.map(elem => elem.Recovered),
+            backgroundColor: 'rgb(255,255,255,0.1)',
+            borderColor: theme.palette.success.main
+         },
+         {
+            label: 'Deaths',
+            data: data.map(elem => elem.Deaths),
+            backgroundColor: 'rgb(255,255,255,0.1)',
+            borderColor: theme.palette.secondary.main
+         }
+      ]
+      dataSetMainChart = buildDataSet(labels, datasets);
    }
-   
+
+   if (global) {
+      newDataCountrySlots = parseSlots("New Confirmed", NewConfirmed, "New Deaths", NewDeaths, "New Recovered", NewRecovered, theme);
+   }
+
    if (!(data || global)) {
       return (
          <Backdrop className={classes.backdrop} open={!(data || global)}>
@@ -79,15 +87,15 @@ export default function App({ theme }) {
       );
    }
 
-  return (
-   <Container className={classes.root}>
-      <MainChart 
-         dataset={dataSet}
+   return (
+      <Container className={classes.root}>
+         <MainChart
+            dataset={dataSetMainChart}
          />
-      <CardContainer 
-         theme={theme}
-         slots={parseSlots("New Confirmed", NewConfirmed, "New Deaths", NewDeaths, "New Recovered", NewRecovered)}
+         <CardContainer
+            theme={theme}
+            slots={newDataCountrySlots}
          />
-   </Container>
-  );
+      </Container>
+   );
 }
