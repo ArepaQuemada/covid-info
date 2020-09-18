@@ -75,7 +75,7 @@ export default function App({ theme }) {
             label: 'Confirmed',
             data: data.map(elem => elem.Confirmed),
             backgroundColor: 'rgb(255,255,255,0.1)',
-            borderColor: theme.palette.primary.main,
+            borderColor: theme.palette.secondary.main,
          },
       ]
       dataSetMainChart = buildDataSet(labels, datasets);
@@ -121,12 +121,12 @@ export default function App({ theme }) {
          />
          <Box width="100%" display="flex" flexWrap="wrap" alignItems="space-between">
             <MainDoughnut
-               color={theme.palette.primary.main}
+               color={theme.palette.primary.dark}
                dataset={datasetMainDoughnutCountry}
                title="Total by country"
             />
             <MainDoughnut
-               color={theme.palette.primary.main}
+               color={theme.palette.primary.dark}
                dataset={datasetMainDoughnutGlobal}
                title="Total globally"
             />
