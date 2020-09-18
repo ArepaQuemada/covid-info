@@ -9,9 +9,13 @@ export default function StatCard({ title, stats, color }) {
             padding: '10px',
             width: '31%',
             marginBottom: '10px',
+            transition: '.2s',
             [theme.breakpoints.down('sm')]: {
                 width: '100%'
             },
+            '&:hover': {
+                transform: 'rotateY(30deg)'
+            }
         }
     }));
 
