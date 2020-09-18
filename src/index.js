@@ -15,6 +15,9 @@ const theme = createMuiTheme({
       main: '#ff1744',
       dark: '#c4001d',
       light: '#ff616f'
+    },
+    alert: {
+      main: '#FEEA3B'
     }
   }
 })
@@ -22,7 +25,7 @@ const theme = createMuiTheme({
 ReactDOM.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
-      <App />
+      <App theme={theme}/>
     </ThemeProvider>
   </React.StrictMode>,
   document.getElementById('root')
