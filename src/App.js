@@ -40,8 +40,9 @@ export default function App({ theme }) {
    const { today, fromDate } = useParseDate();
    const data = useFetch(`https://api.covid19api.com/country/argentina?from=${fromDate}&to=${today}`);
    const global = useFetch('https://api.covid19api.com/summary');
+   console.log(global);
    const countryData = ((global || {}).Countries || []).find(elem => elem.Country = 'Argentina') || {};
-   const { NewConfirmed, NewDeaths, NewRecovered } = countryData;
+   const { NewConfirmed, NewDeaths, NewRecovered, TotalConfirmed, TotalDeaths, TotalRecovered } = countryData;
    let dataSet = {};
 
    if (data) {
@@ -67,7 +68,7 @@ export default function App({ theme }) {
                borderColor: theme.palette.secondary.main 
             }
          ]
-      }   
+      }
    }
    
    if (!(data || global)) {
@@ -75,7 +76,7 @@ export default function App({ theme }) {
          <Backdrop className={classes.backdrop} open={!(data || global)}>
             <CircularProgress></CircularProgress>
          </Backdrop>
-      )
+      );
    }
 
   return (

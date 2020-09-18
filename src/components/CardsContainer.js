@@ -39,10 +39,10 @@ export default function CardsContainer({ theme, slots }) {
                     color={theme.palette.success.main}
                 />
             </Box>
-        )
+        );
     }
     return (
         <>
         </>
-    )
+    );
 }

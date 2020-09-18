@@ -13,7 +13,7 @@ const useStyles = makeStyles(theme => ({
             padding: 0
         }
     }
-}))
+}));
 
 export default function MainChart({ dataset }) {
     const classes = useStyles();
@@ -26,5 +26,5 @@ export default function MainChart({ dataset }) {
                 />
             </Box>
         </Container>
-    )
+    );
 }
