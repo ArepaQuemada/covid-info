@@ -1,5 +1,5 @@
 export default function buildDataSet(labels, datasets) {
-    
+
     return {
         labels,
         datasets: datasets.map(elem => {

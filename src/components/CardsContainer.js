@@ -3,7 +3,6 @@ import { Box } from '@material-ui/core';
 import StatCard from './StatCard';
 
 export default function CardsContainer({ theme, slots }) {
-    console.log(slots);
     if (slots) {
         return (
             <Box display="flex" justifyContent="space-between" width="100%" flexWrap="wrap">
