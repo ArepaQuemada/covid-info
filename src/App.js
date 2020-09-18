@@ -2,7 +2,7 @@ import React from 'react';
 import useFetch from './hooks/useFetch';
 import useParseDate from './hooks/useParseDate';
 import dateFormat from 'dateformat';
-import { makeStyles, Container, Backdrop, CircularProgress, Box } from '@material-ui/core';
+import { makeStyles, Container, Backdrop, CircularProgress, Box, Typography } from '@material-ui/core';
 import MainChart from './components/MainChart';
 import CardContainer from './components/CardsContainer';
 import MainDoughnut from './components/MainDoughnut';
@@ -112,6 +112,7 @@ export default function App({ theme }) {
 
    return (
       <Container className={classes.root}>
+         <Typography variant="h4"> Covid Info Charts</Typography>
          <MainChart
             dataset={dataSetMainChart}
          />
