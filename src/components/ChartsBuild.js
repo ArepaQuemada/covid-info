@@ -49,6 +49,7 @@ const buildDataSetMonthly = (data, theme) => {
 
 
 const getTotals = (countryData, data) => {
+    console.log(data);
     const { Global } = data;
     return {
         totalCountryData: extractTotals(countryData),
@@ -57,9 +58,11 @@ const getTotals = (countryData, data) => {
 }
 
 const buildDataSetGlobal = (data, theme, countryName) => {
-    const countryData = ((data || {}).Countries || []).find(elem => elem.Country.search(countryName)) || {};
-    const newCountryData = extractNews(countryData);
-    const { totalCountryData, totalGlobalData } = getTotals(countryData, data);
+    const countryData = ((data || {}).Countries || []).filter(elem => {
+        return elem.Country.toLowerCase().indexOf(countryName.toLowerCase()) > -1
+    });
+    const newCountryData = extractNews(...countryData);
+    const { totalCountryData, totalGlobalData } = getTotals(...countryData, data);
     const titles = ['Confirmed', 'Deaths', 'Recovered'];
     const newDataCountrySlots = parseSlots('New Confirmed', 'New Deaths', 'New Recovered', ...newCountryData, theme);
 
@@ -87,24 +90,20 @@ const buildDataSetGlobal = (data, theme, countryName) => {
 
 export default function ChartsBuild({ theme, data, countryName }) {
     const { monthly, global } = data;
-    const chartsRef = useRef();
-    console.log(global);
 
     if (monthly && global) {
         const dataSetMainChart = buildDataSetMonthly(monthly, theme);
         const dataSetsDoughnut = buildDataSetGlobal(global, theme, countryName);
         const { newDataCountrySlots } = dataSetsDoughnut;
-        
+
         return (
-            <div ref={chartsRef}>
-                <ChartsContainer
-                    dataSetMainChart={dataSetMainChart}
-                    dataSetsDoughnut={dataSetsDoughnut}
-                    newDataCountrySlots={newDataCountrySlots}
-                    theme={theme}
-                    chartsRef={chartsRef.current}
-                />
-            </div>
+            <ChartsContainer
+                dataSetMainChart={dataSetMainChart}
+                dataSetsDoughnut={dataSetsDoughnut}
+                newDataCountrySlots={newDataCountrySlots}
+                theme={theme}
+                chartsRef={chartsRef.current}
+            />
         );
     }
     return (
