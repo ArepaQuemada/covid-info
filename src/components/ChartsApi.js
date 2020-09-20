@@ -17,10 +17,10 @@ export default function ChartsApi ({ theme, countryName }) {
     const { today, fromDate } = parseDate();
     const [ loading, setLoading ] = useState();
     const data = {
-        monthly: useFetch(`https://api.covid19api.com/country/${countryName}?from=${fromDate}&to=${today}`, setLoading),
+        monthly: useFetch(`https://api.covid19api.com/total/country/${countryName}/status/confirmed?from=${fromDate}&to=${today}`, setLoading),
         global: useFetch('https://api.covid19api.com/summary', setLoading),
     }
-
+    console.log(data)
     if (loading) {
         return (
            <Backdrop className={classes.backdrop} open={loading}>
