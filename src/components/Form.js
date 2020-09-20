@@ -21,8 +21,7 @@ export default function Form({ setCountryName }) {
 
     return (
         <Container className={classes.root} disableGutters>
-            <Typography variant="h4">COVID INFO CHARTS</Typography>
-            <Box height="80%" display="flex" flexDirection="column" justifyContent="center">
+            <Box mt={4} height="80%" display="flex" flexDirection="column" justifyContent="center">
                 <form onSubmit={handleClick}>
                     <Box mb={2}>
                         <Autocomplete

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { AppBar, Toolbar, IconButton, Typography, makeStyles, Drawer, Container, Divider, Box } from '@material-ui/core';
-import { BrowserRouter as Router, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import MenuIcon from '@material-ui/icons/Menu';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
@@ -26,7 +26,7 @@ export default function Header() {
     const menuItems = [
         {
             menuName: 'Country Info',
-            route: '/country-info'
+            route: '/'
         },
         {
             menuName: 'Compare Countries',
@@ -64,14 +64,12 @@ export default function Header() {
                     <Divider />
                     {menuItems.map((item, index) => {
                         return (
-                            <Router>
-                                <Box m={2} p={1} key={index}>
-                                    <Link className={classes.link} to={`${item.route}`} onClick={handleOpenMenu}>
-                                        <Typography variant="body1">{item.menuName}</Typography>
-                                    </Link>
-                                </Box>
+                            <Box m={2} p={1} key={index}>
+                                <Link className={classes.link} to={`${item.route}`} onClick={handleOpenMenu}>
+                                    <Typography variant="body1">{item.menuName}</Typography>
+                                </Link>
                                 <Divider />
-                            </Router>
+                            </Box>
                         )
                     })}
                 </Container>

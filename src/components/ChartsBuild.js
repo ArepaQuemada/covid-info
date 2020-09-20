@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import ChartsContainer from './ChartsContainer';
 import buildDataSet from '../utils/buildDataSet';
 import dateFormat from 'dateformat';

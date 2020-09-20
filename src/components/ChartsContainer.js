@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { makeStyles, Container, Box, Typography } from '@material-ui/core';
+import { makeStyles, Container, Box } from '@material-ui/core';
 import MainChart from './MainChart';
 import CardContainer from './CardsContainer';
 import MainDoughnut from './MainDoughnut';
