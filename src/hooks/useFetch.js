@@ -12,6 +12,7 @@ export default function useFetch(url, setLoading) {
                 setData(data.data);
             } catch (err) {
                 console.log(err);
+                setData(undefined);
             } finally {
                 setLoading(false);
             }

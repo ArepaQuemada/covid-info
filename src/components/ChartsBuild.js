@@ -57,7 +57,7 @@ const getTotals = (countryData, data) => {
 }
 
 const buildDataSetGlobal = (data, theme, countryName) => {
-    const countryData = ((data || {}).Countries || []).find(elem => elem.Country === countryName) || {};
+    const countryData = ((data || {}).Countries || []).find(elem => elem.Country.search(countryName)) || {};
     const newCountryData = extractNews(countryData);
     const { totalCountryData, totalGlobalData } = getTotals(countryData, data);
     const titles = ['Confirmed', 'Deaths', 'Recovered'];
@@ -88,6 +88,7 @@ const buildDataSetGlobal = (data, theme, countryName) => {
 export default function ChartsBuild({ theme, data, countryName }) {
     const { monthly, global } = data;
     const chartsRef = useRef();
+    console.log(global);
 
     if (monthly && global) {
         const dataSetMainChart = buildDataSetMonthly(monthly, theme);
