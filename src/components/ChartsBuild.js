@@ -49,8 +49,7 @@ const buildDataSetMonthly = (data, theme) => {
 
 
 const getTotals = (countryData, data) => {
-    console.log(data);
-    const { Global } = data;
+    const { Global } = data || {};
     return {
         totalCountryData: extractTotals(countryData),
         totalGlobalData: extractTotals(Global)
