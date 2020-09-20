@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import { AppBar, Toolbar, IconButton, Typography, makeStyles, Drawer, Container, Divider, Box, Link } from '@material-ui/core';
+import { AppBar, Toolbar, IconButton, Typography, makeStyles, Drawer, Container, Divider, Box } from '@material-ui/core';
+import { BrowserRouter as Router, Link } from 'react-router-dom';
 import MenuIcon from '@material-ui/icons/Menu';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -21,7 +23,20 @@ const useStyles = makeStyles(theme => ({
 export default function Header() {
     const classes = useStyles();
     const [openMenu, setOpenMenu] = useState(false);
-    const menuItems = ['Country Info', 'Compare Countries', 'Global Info']
+    const menuItems = [
+        {
+            menuName: 'Country Info',
+            route: '/country-info'
+        },
+        {
+            menuName: 'Compare Countries',
+            route: '/compare-countries'
+        },
+        {
+            menuName: 'Global Info',
+            route: '/global-info'
+        }
+    ]
 
     const handleOpenMenu = () => {
         setOpenMenu(!openMenu);
@@ -41,18 +56,22 @@ export default function Header() {
                 anchor="left"
                 open={openMenu} >
                 <Container className={classes.drawerContainer}>
-                    <IconButton onClick={handleOpenMenu}>
-                        <ExitToAppIcon />
-                    </IconButton>
+                    <Box display="flex" justifyContent="center" width="100%">
+                        <IconButton onClick={handleOpenMenu}>
+                            <ExitToAppIcon />
+                        </IconButton>
+                    </Box>
                     <Divider />
                     {menuItems.map((item, index) => {
                         return (
-                            <Box m={2} p={1} key={index}>
-                                <Link className={classes.link} >
-                                    <Typography variant="body1">{item}</Typography>
-                                </Link>
+                            <Router>
+                                <Box m={2} p={1} key={index}>
+                                    <Link className={classes.link} to={`${item.route}`} onClick={handleOpenMenu}>
+                                        <Typography variant="body1">{item.menuName}</Typography>
+                                    </Link>
+                                </Box>
                                 <Divider />
-                            </Box>
+                            </Router>
                         )
                     })}
                 </Container>
