@@ -102,7 +102,6 @@ export default function ChartsBuild({ theme, data, countryName }) {
                 dataSetsDoughnut={dataSetsDoughnut}
                 newDataCountrySlots={newDataCountrySlots}
                 theme={theme}
-                chartsRef={chartsRef.current}
             />
         );
     }
