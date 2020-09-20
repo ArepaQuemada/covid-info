@@ -43,7 +43,7 @@ export default function Header() {
     }
 
     return (
-        <Container disableGutters>
+        <Container maxWidth={false} disableGutters>
             <AppBar position="static">
                 <Toolbar className={classes.root}>
                     <IconButton onClick={handleOpenMenu}>

@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import countries from '../utils/countries.json';
-import { TextField, Container, Box, Typography, Button, makeStyles } from '@material-ui/core';
+import { TextField, Container, Box, Button, makeStyles } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab'
 
 const useStyles = makeStyles({
@@ -20,7 +20,7 @@ export default function Form({ setCountryName }) {
     }
 
     return (
-        <Container className={classes.root} disableGutters>
+        <Container className={classes.root}>
             <Box mt={4} height="80%" display="flex" flexDirection="column" justifyContent="center">
                 <form onSubmit={handleClick}>
                     <Box mb={2}>
