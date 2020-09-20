@@ -39,7 +39,7 @@ const buildDataSetMonthly = (data, theme) => {
     const datasets = [
         {
             label: 'Confirmed',
-            data: data.map(elem => elem.Confirmed),
+            data: data.map(elem => elem.Cases),
             backgroundColor: 'rgb(255,255,255,0.1)',
             borderColor: theme.palette.secondary.main,
         },
@@ -49,8 +49,7 @@ const buildDataSetMonthly = (data, theme) => {
 
 
 const getTotals = (countryData, data) => {
-    console.log(data);
-    const { Global } = data;
+    const { Global } = data || {};
     return {
         totalCountryData: extractTotals(countryData),
         totalGlobalData: extractTotals(Global)
@@ -95,7 +94,7 @@ export default function ChartsBuild({ theme, data, countryName }) {
         const dataSetMainChart = buildDataSetMonthly(monthly, theme);
         const dataSetsDoughnut = buildDataSetGlobal(global, theme, countryName);
         const { newDataCountrySlots } = dataSetsDoughnut;
-
+    
         return (
             <ChartsContainer
                 dataSetMainChart={dataSetMainChart}
