@@ -19,7 +19,7 @@ export default function MainChart({ dataset }) {
     const classes = useStyles();
 
     return (
-        <Container className={classes.root} disableGutters>
+        <Container className={classes.root} disableGutters maxWidth="md">
             <Box className={classes.wrapper}>
                 <Line
                     data={dataset}
