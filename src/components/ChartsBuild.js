@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import ChartsContainer from './ChartsContainer';
 import buildDataSet from '../utils/buildDataSet';
 import dateFormat from 'dateformat';
@@ -33,12 +33,12 @@ const extractNews = (data) => {
     return [NewConfirmed, NewDeaths, NewRecovered];
 }
 
-const buildDataSetMonthly = (data, theme) => {
+const buildDataSetMonthly = (data, theme, status) => {
 
     const labels = data.map(elem => dateFormat(elem.Date, "d, mmm"));
     const datasets = [
         {
-            label: 'Confirmed',
+            label: status,
             data: data.map(elem => elem.Cases),
             backgroundColor: 'rgb(255,255,255,0.1)',
             borderColor: theme.palette.secondary.main,
@@ -46,7 +46,6 @@ const buildDataSetMonthly = (data, theme) => {
     ]
     return buildDataSet(labels, datasets);
 }
-
 
 const getTotals = (countryData, data) => {
     const { Global } = data || {};
@@ -87,11 +86,11 @@ const buildDataSetGlobal = (data, theme, countryName) => {
     }
 }
 
-export default function ChartsBuild({ theme, data, countryName }) {
+export default function ChartsBuild({ theme, data, countryName, status }) {
     const { monthly, global } = data;
 
     if (monthly && global) {
-        const dataSetMainChart = buildDataSetMonthly(monthly, theme);
+        const dataSetMainChart = buildDataSetMonthly(monthly, theme, status);
         const dataSetsDoughnut = buildDataSetGlobal(global, theme, countryName);
         const { newDataCountrySlots } = dataSetsDoughnut;
     
