@@ -3,31 +3,29 @@ import { Container } from '@material-ui/core';
 import Form from './Form';
 import CountryInfoApi from './CountryInfoApi';
 import BuildCards from './BuildCards';
-
-const getNews = (global, countryName) => {
-    if (global && countryName) {
-        const countryData = global.Countries.filter(elem => {
-            return elem.Country.toLowerCase().indexOf(countryName.toLowerCase()) > -1
-        });
-        
-        if (countryData && countryData.length > 0) {
-            const [{ NewConfirmed, NewDeaths, NewRecovered } ] = countryData;
-            return [NewConfirmed, NewDeaths, NewRecovered];
-        } else {
-            return null
-        }
-    }
-}
+import { getTotals, getNews } from '../utils/extractData';
 
 export default function CountryInfo({ theme, global }) {
     const [countryName, setCountryName] = useState(window.localStorage.getItem('countryName') || '');
     const titles = ["New Confirmed", "New Deaths", "New Recovered"];
-    const stats = getNews(global, countryName);
+    let globalElement = <div></div>
 
     useEffect(() => {
         window.localStorage.setItem('countryName', countryName);
-    }, [ countryName ]);
+    }, [countryName]);
 
+    if (global && countryName) {
+        const countryData = global.Countries.filter(elem => {
+            return elem.Country.toLowerCase().indexOf(countryName.toLowerCase()) > -1
+        });
+        const stats = getNews(countryData);
+        const totals = getTotals(countryData);
+        globalElement = <BuildCards
+            titles={titles}
+            stats={stats}
+            theme={theme}
+        />
+    };
     return (
         <Container maxWidth="md">
             <Form
@@ -37,13 +35,8 @@ export default function CountryInfo({ theme, global }) {
                 <CountryInfoApi
                     countryName={countryName}
                     theme={theme}
+                    globalElement={globalElement}
                 /> : <> </>}
-            { stats ?  
-                <BuildCards 
-                    titles={titles}
-                    stats={stats}
-                    theme={theme}
-            /> : <></>}
         </Container>
-    );    
+    )
 }

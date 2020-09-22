@@ -23,7 +23,7 @@ const parseSlots = (firstTitle, secondTitle, thirdTitle, firstStat, secondStat, 
     ]
 }
 
-const extractTotals = (data) => {
+const getTotals = (data) => {
     const { TotalConfirmed, TotalDeaths, TotalRecovered } = data || {};
     return [TotalConfirmed, TotalDeaths, TotalRecovered];
 }
@@ -50,8 +50,8 @@ const buildDataSetMonthly = (data, theme, status) => {
 const getTotals = (countryData, data) => {
     const { Global } = data || {};
     return {
-        totalCountryData: extractTotals(countryData),
-        totalGlobalData: extractTotals(Global)
+        totalCountryData: getTotals(countryData),
+        totalGlobalData: getTotals(Global)
     }
 }
 

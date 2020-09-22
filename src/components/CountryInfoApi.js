@@ -36,7 +36,7 @@ const buildData = (label, status, color) => {
    return { labels, datasets };
 }
 
-export default function CountryInfoApi({ theme, countryName }) {
+export default function CountryInfoApi({ theme, countryName, globalElement }) {
    const { today, fromDate } = parseDate();
    const [loading, setLoading] = useState();
    const [status, setStatus] = useState('confirmed');
@@ -77,6 +77,7 @@ export default function CountryInfoApi({ theme, countryName }) {
                labels={labels}
                datasets={datasets}
             />
+            {globalElement}
          </Box>
       )
    }
