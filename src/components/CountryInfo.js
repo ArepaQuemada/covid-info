@@ -11,7 +11,7 @@ const buildGlobalElement = (titles, stats, theme, totals, percent, themes) => {
         {
             data: totals,
             backgroundColor: themes
-        }
+        },
     ]
 
     const datasetPercentDoughnut = [
@@ -20,10 +20,26 @@ const buildGlobalElement = (titles, stats, theme, totals, percent, themes) => {
             backgroundColor: themes
         }
     ]
+
+    const optionsTotal = {
+        title: {
+            display: true,
+            text: 'Totals',
+            fontSize: 18
+        }
+    }
+
+    const optionsPercent = {
+        title: {
+            display: true,
+            text: 'Percent of Total',
+            fontSize: 18
+        }
+    }
     return (
         <Box>
             <BuildCards
-                titles={titles.map(elem => ' New '+elem)}
+                titles={titles.map(elem => ' New ' + elem)}
                 stats={stats}
                 theme={theme}
             />
@@ -31,16 +47,17 @@ const buildGlobalElement = (titles, stats, theme, totals, percent, themes) => {
                 <MainDoughnutBuild
                     labels={titles}
                     datasets={datasetTotalDoughnut}
-                    title="Totals"
+                    options={optionsTotal}
                 />
                 <MainDoughnutBuild
                     labels={titles}
                     datasets={datasetPercentDoughnut}
                     title="Percent"
+                    options={optionsPercent}
                 />
             </Box>
         </Box>
-    )
+    );
 }
 
 export default function CountryInfo({ theme, global }) {

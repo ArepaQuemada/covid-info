@@ -13,15 +13,15 @@ const useStyles = makeStyles(theme =>({
     }
 }));
 
-export default function MainDoughnut({ dataset, title }) {
+export default function MainDoughnut({ dataset, options }) {
     
     const classes = useStyles();
 
     return (
         <Container className={classes.root} maxWidth="sm" disableGutters>
             <Doughnut 
-                data={dataset} />
-            <Typography variant="h5">{title}</Typography>
+                data={dataset}
+                options={options} />
         </Container>
     );
 }

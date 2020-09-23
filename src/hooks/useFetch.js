@@ -5,19 +5,25 @@ export default function useFetch(url, setLoading) {
     const [ data, setData ] = useState();
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                setLoading(true)
-                const data = await axios.get(url);
-                setData(data.data);
-            } catch (err) {
-                console.log(err);
-                setData(undefined);
-            } finally {
-                setLoading(false);
+        let unmounted = false;
+        if (!unmounted) {
+            const fetchData = async () => {
+                try {
+                    setLoading(true)
+                    const data = await axios.get(url);
+                    setData(data.data);
+                } catch (err) {
+                    console.log(err);
+                    setData(undefined);
+                } finally {
+                    setLoading(false);
+                }
             }
+            fetchData();
         }
-        fetchData();
+        return () => {
+            unmounted = true;
+        }
     }, [ url, setLoading ]);
     return data;
 }
