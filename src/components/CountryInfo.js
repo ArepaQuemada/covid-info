@@ -5,6 +5,7 @@ import CountryInfoApi from './CountryInfoApi';
 import BuildCards from './BuildCards';
 import { getTotals, getNews, getPercentTotals } from '../utils/extractData';
 import MainDoughnutBuild from './MainDoughnutBuild';
+import MainBarBuild from './MainBarBuild';
 
 const buildGlobalElement = (titles, stats, theme, totals, percent, themes) => {
     const datasetTotalDoughnut = [
@@ -18,7 +19,7 @@ const buildGlobalElement = (titles, stats, theme, totals, percent, themes) => {
         {
             data: percent,
             backgroundColor: themes
-        }
+        },
     ]
 
     const optionsTotal = {
@@ -49,7 +50,7 @@ const buildGlobalElement = (titles, stats, theme, totals, percent, themes) => {
                     datasets={datasetTotalDoughnut}
                     options={optionsTotal}
                 />
-                <MainDoughnutBuild
+                <MainBarBuild
                     labels={titles}
                     datasets={datasetPercentDoughnut}
                     title="Percent"
