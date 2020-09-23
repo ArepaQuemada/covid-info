@@ -18,7 +18,8 @@ const buildGlobalElement = (titles, stats, theme, totals, percent, themes) => {
     const datasetPercentDoughnut = [
         {
             data: percent,
-            backgroundColor: themes
+            backgroundColor: themes,
+            label: 'Percents'
         },
     ]
 

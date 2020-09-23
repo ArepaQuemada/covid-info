@@ -67,7 +67,8 @@ export default function CountryInfoApi({ theme, countryName, globalElement }) {
       const { labels, datasets } = getLabelsAndDataset2(status, statusData);
 
       return (
-         <Box width="100%">
+         <Box width="100%" textAlign="center">
+            <Typography variant="h5">{countryName}</Typography>
             <Box display="flex" justifyContent="center">
                <Breadcrumbs>
                   <Link onClick={handleClickStatus}>
