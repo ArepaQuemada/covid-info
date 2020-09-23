@@ -6,21 +6,22 @@ import BackdropLoader from './BackdropLoader';
 import MainChartBuild from './MainChartBuild';
 import dateFormat from 'dateformat';
 
-const getLabelsAndDataset = (status, theme, confirmed, deaths, recovered) => {
+const getLabelsAndDataset = (status, theme, countryData) => {
+   let color;
    switch (status) {
-      case 'confirmed': {
-         return buildData(status, confirmed, theme.palette.primary.main);
-      }
       case 'deaths': {
-         return buildData(status, deaths, theme.palette.secondary.main);
+         color = theme.palette.secondary.main;
+         break
       }
       case 'recovered': {
-         return buildData(status, recovered, theme.palette.success.main);
+         color = theme.palette.success.main;
+         break;
       }
       default: {
-         return null
+         color = theme.palette.primary.main;
       }
    }
+   return buildData(status, countryData, color)
 }
 
 const buildData = (label, status, color) => {
@@ -41,9 +42,7 @@ export default function CountryInfoApi({ theme, countryName, globalElement }) {
    const [loading, setLoading] = useState();
    const [status, setStatus] = useState('confirmed');
 
-   const confirmed = useFetch(`https://api.covid19api.com/total/country/${countryName}/status/confirmed?from=${fromDate}&to=${today}`, setLoading);
-   const deaths = useFetch(`https://api.covid19api.com/total/country/${countryName}/status/deaths?from=${fromDate}&to=${today}`, setLoading);
-   const recovered = useFetch(`https://api.covid19api.com/total/country/${countryName}/status/recovered?from=${fromDate}&to=${today}`, setLoading);
+   const countryData = useFetch(`https://api.covid19api.com/total/country/${countryName}/status/${status}?from=${fromDate}&to=${today}`, setLoading);
 
    const handleClickStatus = (e) => {
       setStatus(e.target.innerText.toLowerCase());
@@ -55,9 +54,9 @@ export default function CountryInfoApi({ theme, countryName, globalElement }) {
       );
    }
 
-   if (confirmed && deaths && recovered) {
-      const { labels, datasets } = getLabelsAndDataset(status, theme, confirmed, deaths, recovered);
-      
+   if (countryData) {
+      const { labels, datasets } = getLabelsAndDataset(status, theme, countryData);
+
       return (
          <Box width="100%">
             <Box display="flex" justifyContent="center">
@@ -79,7 +78,7 @@ export default function CountryInfoApi({ theme, countryName, globalElement }) {
             />
             {globalElement}
          </Box>
-      )
+      );
    }
    return (
       <>

@@ -64,6 +64,7 @@ export default function CountryInfo({ theme, global }) {
     const [countryName, setCountryName] = useState(window.localStorage.getItem('countryName') || '');
     const titles = ["Confirmed", "Deaths", "Recovered"];
     let globalElement = <div></div>
+    let countryInfoApiElement = <div></div>
 
     useEffect(() => {
         let unmounted = false;
@@ -84,18 +85,16 @@ export default function CountryInfo({ theme, global }) {
         const totals = getTotals(countryData);
         const percent = getPercentTotals(totals)
         globalElement = countryData ? buildGlobalElement(titles, stats, theme, totals, percent, doughnutThemes) : <div></div>
+        countryInfoApiElement = <CountryInfoApi
+            countryName={countryName}
+            theme={theme}
+            globalElement={globalElement} />
     };
     return (
         <Container maxWidth="md">
             <Form
-                setCountryName={setCountryName}
-            />
-            { countryName ?
-                <CountryInfoApi
-                    countryName={countryName}
-                    theme={theme}
-                    globalElement={globalElement}
-                /> : <> </>}
+                setCountryName={setCountryName} />
+            { countryInfoApiElement}
         </Container>
-    )
+    );
 }
