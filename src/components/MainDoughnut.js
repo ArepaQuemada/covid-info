@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, makeStyles, Typography } from '@material-ui/core';
+import { Container, makeStyles } from '@material-ui/core';
 import { Doughnut } from 'react-chartjs-2'
 
 const useStyles = makeStyles(theme =>({

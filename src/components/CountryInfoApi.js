@@ -6,22 +6,9 @@ import BackdropLoader from './BackdropLoader';
 import MainChartBuild from './MainChartBuild';
 import dateFormat from 'dateformat';
 
-const getLabelsAndDataset = (status, theme, countryData) => {
-   let color;
-   switch (status) {
-      case 'deaths': {
-         color = theme.palette.secondary.main;
-         break
-      }
-      case 'recovered': {
-         color = theme.palette.success.main;
-         break;
-      }
-      default: {
-         color = theme.palette.primary.main;
-      }
-   }
-   return buildData(status, countryData, color)
+const getLabelsAndDataset2 = (status, statusData) => {
+   const { data, color } = statusData.find(elem => elem.status === status);
+   return buildData(status, data, color);
 }
 
 const buildData = (label, status, color) => {
@@ -37,12 +24,32 @@ const buildData = (label, status, color) => {
    return { labels, datasets };
 }
 
+const isFetched = (statusData) => {
+   return statusData.every(elem => elem.data);
+}
+
 export default function CountryInfoApi({ theme, countryName, globalElement }) {
    const { today, fromDate } = parseDate();
    const [loading, setLoading] = useState();
    const [status, setStatus] = useState('confirmed');
 
-   const countryData = useFetch(`https://api.covid19api.com/total/country/${countryName}/status/${status}?from=${fromDate}&to=${today}`, setLoading);
+   const statusData = [
+      {
+         data: useFetch(`https://api.covid19api.com/total/country/${countryName}/status/confirmed?from=${fromDate}&to=${today}`, setLoading),      
+         status: 'confirmed',
+         color: theme.palette.primary.main
+      },
+      {
+         data: useFetch(`https://api.covid19api.com/total/country/${countryName}/status/deaths?from=${fromDate}&to=${today}`, setLoading),
+         status: 'deaths',
+         color: theme.palette.secondary.main
+      },
+      {
+         data: useFetch(`https://api.covid19api.com/total/country/${countryName}/status/recovered?from=${fromDate}&to=${today}`, setLoading),
+         status: 'recovered',
+         color: theme.palette.success.main
+      }
+   ];
 
    const handleClickStatus = (e) => {
       setStatus(e.target.innerText.toLowerCase());
@@ -54,8 +61,10 @@ export default function CountryInfoApi({ theme, countryName, globalElement }) {
       );
    }
 
-   if (countryData) {
-      const { labels, datasets } = getLabelsAndDataset(status, theme, countryData);
+   const fetched = isFetched(statusData);
+
+   if (fetched) {
+      const { labels, datasets } = getLabelsAndDataset2(status, statusData);
 
       return (
          <Box width="100%">
