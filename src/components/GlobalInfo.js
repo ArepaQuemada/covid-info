@@ -5,6 +5,10 @@ import BuildCards from './BuildCards';
 const useStyles = makeStyles(theme => ({
     date: {
         fontStyle: 'italic',
+    },
+    cardTitles: {
+        fontWeight: 600,
+        lineHeight: 3
     }
 }))
 
@@ -14,25 +18,38 @@ export default function GlobalInfo({ global, theme }) {
     const hasProperties = [Global, Date, Countries].every(elem => elem !== undefined);
 
     if (hasProperties) {
-        const titles = ["Total Confirmed", "Total Deaths", "Total Recovered"];
-        const { TotalConfirmed, TotalDeaths, TotalRecovered } = Global;
+        const totalTitles = ["Total Confirmed", "Total Deaths", "Total Recovered"];
+        const newTitles = ["New Confirmed ", " New Deaths ", "New Recoverd"];
+        const { TotalConfirmed, TotalDeaths, TotalRecovered, NewConfirmed, NewDeaths, NewRecovered } = Global;
 
         return (
             <Container maxWidth="md">
                 <Box mt={4}>
                     <Typography variant="h5">Global data</Typography>
                     <Typography variant="body1">
-                        Date:
+                        Date
                         <Typography variant="caption" className={classes.date}>
-                            {Date}
+                            : {Date}
                         </Typography>
                     </Typography>
-                    <BuildCards
-                        titles={titles}
-                        stats={[TotalConfirmed, TotalDeaths, TotalRecovered]}
-                        theme={theme}
-                    />
-
+                    <Typography variant="body1">
+                        Countries 
+                        <Typography variant="caption" className={classes.date}>
+                            : {Countries.length}
+                        </Typography>
+                    </Typography>
+                    <Box textAlign="center" width="100%">
+                        <Typography variant="h6" className={classes.cardTitles}>Totals</Typography>
+                        <BuildCards
+                            titles={totalTitles}
+                            stats={[TotalConfirmed, TotalDeaths, TotalRecovered]}
+                            theme={theme} />
+                        <Typography variant="h6" className={classes.cardTitles}>News</Typography>
+                        <BuildCards
+                            titles={newTitles}
+                            stats={[NewConfirmed, NewDeaths, NewRecovered]}
+                            theme={theme} />
+                    </Box>
                 </Box>
             </Container>
         )
