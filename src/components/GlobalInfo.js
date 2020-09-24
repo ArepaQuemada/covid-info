@@ -3,7 +3,7 @@ import { Container, Box, Typography, makeStyles } from '@material-ui/core';
 import BuildCards from './BuildCards';
 
 const useStyles = makeStyles(theme => ({
-    date: {
+    small: {
         fontStyle: 'italic',
     },
     cardTitles: {
@@ -28,13 +28,13 @@ export default function GlobalInfo({ global, theme }) {
                     <Typography variant="h5">Global data</Typography>
                     <Typography variant="body1">
                         Date
-                        <Typography variant="caption" className={classes.date}>
+                        <Typography variant="caption" className={classes.small}>
                             : {Date}
                         </Typography>
                     </Typography>
                     <Typography variant="body1">
                         Countries 
-                        <Typography variant="caption" className={classes.date}>
+                        <Typography variant="caption" className={classes.small}>
                             : {Countries.length}
                         </Typography>
                     </Typography>
