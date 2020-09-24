@@ -88,7 +88,8 @@ export default function CountryInfo({ theme, global }) {
         const totals = getTotals(countryData);
         const percent = getPercentTotals(totals)
         globalElement = countryData ? buildGlobalElement(titles, stats, theme, totals, percent, doughnutThemes) : <div></div>
-        countryInfoApiElement = <CountryInfoApi
+        countryInfoApiElement = 
+        <CountryInfoApi
             countryName={countryName}
             theme={theme}
             globalElement={globalElement} />
