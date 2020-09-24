@@ -17,7 +17,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function MainChart({ dataset }) {
     const classes = useStyles();
-    console.log(dataset)
+
     return (
         <Container className={classes.root} disableGutters maxWidth="md">
             <Box className={classes.wrapper}>

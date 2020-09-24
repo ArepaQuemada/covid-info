@@ -27,7 +27,7 @@ export default function App({ theme }) {
                   <CompareCountry theme={theme} />   
                </Route>
                <Route path="/global-info">
-                  <GloblInfo theme={theme} />
+                  <GloblInfo theme={theme} global={global}/>
                </Route>
                <Route exact-path="/">
                   <CountryInfo theme={theme} global={global} />

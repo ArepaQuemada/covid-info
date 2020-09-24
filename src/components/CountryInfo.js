@@ -67,6 +67,7 @@ export default function CountryInfo({ theme, global }) {
     const titles = ["Confirmed", "Deaths", "Recovered"];
     let globalElement = <div></div>
     let countryInfoApiElement = <div></div>
+    const { Countries } = global || {};
 
     useEffect(() => {
         let unmounted = false;
@@ -78,16 +79,17 @@ export default function CountryInfo({ theme, global }) {
         }
     }, [countryName]);
 
-    if (global && countryName) {
+    if (Countries && countryName) {
         const doughnutThemes = [theme.palette.primary.main, theme.palette.secondary.main, theme.palette.success.main];
-        const countryData = global.Countries.find(elem => {
+        const countryData = Countries.find(elem => {
             return elem.Country.toLowerCase().indexOf(countryName.toLowerCase()) > -1
         });
         const stats = getNews(countryData);
         const totals = getTotals(countryData);
         const percent = getPercentTotals(totals)
         globalElement = countryData ? buildGlobalElement(titles, stats, theme, totals, percent, doughnutThemes) : <div></div>
-        countryInfoApiElement = <CountryInfoApi
+        countryInfoApiElement = 
+        <CountryInfoApi
             countryName={countryName}
             theme={theme}
             globalElement={globalElement} />

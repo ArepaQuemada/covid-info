@@ -5,7 +5,7 @@ import StatCard from './StatCard';
 export default function CardsContainer({ theme, slots }) {
     if (slots) {
         return (
-            <Box display="flex" justifyContent="space-between" width="100%" flexWrap="wrap">
+            <Box display="flex" justifyContent="space-between" width="100%" flexWrap="wrap" mt={2} mb={2}>
                 {slots.map(elem => {
                     return (
                         <StatCard 
