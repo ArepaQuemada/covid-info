@@ -38,15 +38,15 @@ export default function Header() {
         }
     ]
 
-    const handleOpenMenu = () => {
-        setOpenMenu(!openMenu);
-    }
+    const handleClose = () => setOpenMenu(false);
+
+    const handleOpen = () => setOpenMenu(true);
 
     return (
         <Container maxWidth={false} disableGutters>
             <AppBar position="static">
                 <Toolbar className={classes.root}>
-                    <IconButton onClick={handleOpenMenu}>
+                    <IconButton onClick={handleOpen}>
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="h6">Covid Info Charts</Typography>
@@ -54,10 +54,11 @@ export default function Header() {
             </AppBar>
             <Drawer
                 anchor="left"
-                open={openMenu} >
+                open={openMenu}
+                onClose={handleClose} >
                 <Container className={classes.drawerContainer}>
                     <Box display="flex" justifyContent="center" width="100%">
-                        <IconButton onClick={handleOpenMenu}>
+                        <IconButton>
                             <ExitToAppIcon />
                         </IconButton>
                     </Box>
@@ -65,7 +66,7 @@ export default function Header() {
                     {menuItems.map((item, index) => {
                         return (
                             <Box m={2} p={1} key={index}>
-                                <Link className={classes.link} to={`${item.route}`} onClick={handleOpenMenu}>
+                                <Link className={classes.link} to={`${item.route}`} onClick={handleClose}>
                                     <Typography variant="body1">{item.menuName}</Typography>
                                 </Link>
                                 <Divider />
