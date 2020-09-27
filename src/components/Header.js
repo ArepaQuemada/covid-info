@@ -29,10 +29,6 @@ export default function Header() {
             route: '/'
         },
         {
-            menuName: 'Compare Countries',
-            route: '/compare-countries'
-        },
-        {
             menuName: 'Global Info',
             route: '/global-info'
         }
